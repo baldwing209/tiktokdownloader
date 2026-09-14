@@ -4,581 +4,797 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>TikTok Downloader — Your Next Step After Finding a Video</title>
-  <meta
-    name="description"
-    content="Have a TikTok video you want to keep? Begin with its link, understand video and audio options, and troubleshoot common saving problems."
-  >
+  <title>TikTok Video Downloader - Save Videos From TikTok</title>
+
+  <meta name="description" content="Use a straightforward TikTok video downloader to work with video links from TikTok. Learn how to copy a video address, submit it, and manage your downloaded content.">
+
   <meta name="robots" content="index, follow">
 
   <style>
+    :root {
+      --bg: #eef2f5;
+      --card: #ffffff;
+      --text: #18212b;
+      --muted: #68737e;
+      --line: #d9e0e6;
+      --primary: #1769aa;
+      --primary-dark: #0e4f82;
+      --soft: #e9f3fb;
+    }
+
     * {
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       margin: 0;
+      background: var(--bg);
+      color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
-      background: #f6f6f6;
-      color: #222;
-      line-height: 1.7;
     }
 
-    .container {
-      width: 92%;
-      max-width: 820px;
+    .page {
+      width: min(100% - 30px, 960px);
       margin: 0 auto;
     }
 
     header {
-      padding: 70px 0 35px;
-      text-align: center;
+      padding: 42px 0 22px;
+    }
+
+    .brand {
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: .5px;
+      color: var(--primary);
+      text-transform: uppercase;
     }
 
     h1 {
-      margin: 0 0 12px;
-      font-size: 38px;
-      line-height: 1.2;
+      max-width: 720px;
+      margin: 12px 0 15px;
+      font-size: clamp(32px, 6vw, 52px);
+      line-height: 1.08;
     }
 
-    .intro {
-      max-width: 650px;
-      margin: 0 auto;
-      color: #666;
-      font-size: 17px;
+    .lead {
+      max-width: 720px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
     }
 
-    .downloader {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 25px;
-      margin: 25px 0 45px;
+    .tool {
+      margin: 28px 0 42px;
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 5px 18px rgba(20, 35, 50, .05);
     }
 
-    .input-row {
+    .tool-title {
+      margin: 0 0 7px;
+      font-size: 20px;
+    }
+
+    .tool-note {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .form {
       display: flex;
-      gap: 10px;
+      gap: 9px;
     }
 
-    input {
+    .form input {
       flex: 1;
       min-width: 0;
-      padding: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border: 1px solid #bcc7d0;
+      border-radius: 6px;
+      padding: 15px 14px;
       font-size: 16px;
+      color: var(--text);
+      background: #fff;
     }
 
-    input:focus-visible,
-    button:focus-visible {
-      outline: 2px solid #555;
-      outline-offset: 3px;
+    .form input:focus {
+      outline: 2px solid rgba(23, 105, 170, .16);
+      border-color: var(--primary);
     }
 
-    button {
-      padding: 15px 24px;
+    .form button {
       border: 0;
-      border-radius: 5px;
-      background: #111;
+      border-radius: 6px;
+      padding: 0 24px;
+      background: var(--primary);
       color: #fff;
-      font-size: 16px;
+      font-size: 15px;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #333;
+    .form button:hover {
+      background: var(--primary-dark);
     }
 
-    #message {
+    #status {
       display: none;
-      margin-top: 15px;
-      padding: 10px;
+      margin-top: 13px;
+      padding: 11px 13px;
+      background: var(--soft);
+      border-radius: 5px;
+      color: #315d7c;
       font-size: 14px;
-      color: #555;
     }
 
-    .content {
-      background: #fff;
-      border: 1px solid #ddd;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 35px;
+    }
+
+    .small-card {
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 35px;
-      margin-bottom: 30px;
+      padding: 22px;
     }
 
-    .content h2 {
-      font-size: 25px;
-      margin: 0 0 12px;
-      line-height: 1.3;
+    .number {
+      display: inline-block;
+      margin-bottom: 9px;
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--primary);
     }
 
-    .content h2:not(:first-child) {
-      margin-top: 35px;
-    }
-
-    .content h3 {
-      font-size: 19px;
-      margin-top: 25px;
-    }
-
-    .content p {
-      margin: 0 0 15px;
-      color: #444;
-    }
-
-    .content ul,
-    .content ol {
-      color: #444;
-      padding-left: 25px;
-    }
-
-    .content li {
-      margin-bottom: 10px;
-    }
-
-    .content a {
-      color: #174ea6;
-      text-underline-offset: 3px;
-    }
-
-    .faq {
-      border-top: 1px solid #ddd;
-      padding-top: 18px;
-      margin-top: 20px;
-    }
-
-    .faq h3 {
+    .small-card h2 {
       margin: 0 0 8px;
-      font-size: 18px;
+      font-size: 20px;
+    }
+
+    .small-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    article {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: clamp(22px, 5vw, 42px);
+      margin-bottom: 25px;
+    }
+
+    article h2 {
+      margin: 0 0 14px;
+      font-size: 27px;
+      line-height: 1.25;
+    }
+
+    article h2:not(:first-child) {
+      margin-top: 42px;
+    }
+
+    article h3 {
+      margin: 27px 0 9px;
+      font-size: 19px;
+    }
+
+    article p {
+      margin: 0 0 16px;
+      color: #46515b;
+      line-height: 1.8;
+    }
+
+    article ul {
+      margin: 10px 0 20px;
+      padding-left: 23px;
+      color: #46515b;
+      line-height: 1.8;
+    }
+
+    .highlight {
+      margin: 25px 0;
+      padding: 18px 20px;
+      border-left: 4px solid var(--primary);
+      background: #f1f7fb;
+      color: #42515d;
+    }
+
+    .steps {
+      margin: 18px 0 22px;
+      padding: 0;
+      list-style: none;
+      counter-reset: steps;
+    }
+
+    .steps li {
+      position: relative;
+      counter-increment: steps;
+      padding: 14px 15px 14px 52px;
+      margin-bottom: 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: #46515b;
+    }
+
+    .steps li::before {
+      content: counter(steps);
+      position: absolute;
+      left: 16px;
+      top: 13px;
+      width: 23px;
+      height: 23px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      line-height: 23px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .question {
+      padding: 17px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .question:last-child {
+      border-bottom: 0;
+    }
+
+    .question h3 {
+      margin: 0 0 7px;
+      font-size: 17px;
+    }
+
+    .question p {
+      margin: 0;
+      font-size: 15px;
     }
 
     footer {
+      padding: 18px 0 45px;
+      color: #7a858e;
+      font-size: 13px;
+      line-height: 1.7;
       text-align: center;
-      padding: 35px 0 50px;
-      color: #777;
-      font-size: 14px;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
     }
 
     @media (max-width: 650px) {
-      header {
-        padding-top: 45px;
-      }
-
-      h1 {
-        font-size: 30px;
-      }
-
-      .input-row {
+      .form {
         flex-direction: column;
       }
 
-      button {
-        width: 100%;
+      .form button {
+        min-height: 48px;
       }
 
-      .content {
-        padding: 23px;
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding-top: 30px;
       }
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="container">
-      <h1>TikTok Downloader</h1>
 
-      <p class="intro">
-        Give a good find a second viewing. Enter a TikTok video address
-        below to take the next step with a clip you want to keep.
+  <div class="page">
+
+    <header>
+      <div class="brand">Online video utility</div>
+
+      <h1>TikTok Video Downloader</h1>
+
+      <p class="lead">
+        Have a TikTok video address ready? Place the link in the box below
+        and use this simple web interface to begin working with it.
       </p>
-    </div>
-  </header>
+    </header>
 
-  <main class="container">
-    <section class="downloader" aria-label="Enter a TikTok link">
-      <form id="downloadForm" novalidate>
-        <div class="input-row">
-          <input
-            type="url"
-            id="tiktokUrl"
-            placeholder="Insert a TikTok video URL"
-            aria-label="TikTok video link"
-            aria-describedby="message"
-            autocomplete="off"
-            spellcheck="false"
-          >
 
-          <button type="submit">Download</button>
-        </div>
+    <section class="tool">
 
-        <div id="message" role="status" aria-live="polite"></div>
-      </form>
+      <h2 class="tool-title">Enter a TikTok video link</h2>
+
+      <p class="tool-note">
+        Copy the address of a TikTok video and paste it here.
+      </p>
+
+      <div class="form">
+
+        <input
+          id="videoUrl"
+          type="url"
+          placeholder="https://www.tiktok.com/..."
+          autocomplete="off"
+          aria-label="TikTok video URL"
+        >
+
+        <button type="button" onclick="startDownload()">
+          Process Link
+        </button>
+
+      </div>
+
+      <div id="status"></div>
+
     </section>
 
-    <article class="content">
-      <h2>A Video Link Is Where It Begins</h2>
+
+    <section class="grid">
+
+      <div class="small-card">
+        <span class="number">01</span>
+        <h2>Start with the URL</h2>
+        <p>
+          The address of the TikTok video is the only information you need
+          to begin the process.
+        </p>
+      </div>
+
+      <div class="small-card">
+        <span class="number">02</span>
+        <h2>Works in a browser</h2>
+        <p>
+          Open the page from a phone, tablet, laptop, or desktop computer
+          without installing a dedicated program.
+        </p>
+      </div>
+
+      <div class="small-card">
+        <span class="number">03</span>
+        <h2>Keep it straightforward</h2>
+        <p>
+          The interface concentrates on one task instead of surrounding the
+          downloader with unnecessary controls.
+        </p>
+      </div>
+
+      <div class="small-card">
+        <span class="number">04</span>
+        <h2>Use content responsibly</h2>
+        <p>
+          Always consider the creator's rights and the rules that apply to
+          material you save or reuse.
+        </p>
+      </div>
+
+    </section>
+
+
+    <article>
+
+      <h2>A Different Way to Think About Video Links</h2>
 
       <p>
-        You watch a woodworking demonstration on the bus and want to
-        follow it at home. You publish a short update and need to locate
-        it later. You discover an explanation that deserves more
-        attention than a passing glance. In each case, the individual
-        video link gives you a direct route back to the post.
+        A social video usually begins as something you encounter while
+        scrolling. One moment you are watching clips, and the next you come
+        across a recipe you want to remember, an explanation that deserves
+        another look, a creative idea, or a piece of entertainment that you
+        would like to keep available for later. In those situations, the
+        original video address becomes useful.
       </p>
 
       <p>
-        An online TikTok downloader starts with that address. The link
-        identifies the content you are requesting; any resulting file
-        options depend on what the connected service can retrieve.
-        Use the field above for one video at a time.
+        This page is built around that small but important piece of
+        information: the URL. Rather than asking visitors to work through a
+        long sequence of screens, the service starts with a single input.
+        Paste the TikTok address, submit it, and let the connected processing
+        system handle the next part.
       </p>
-
-      <h2>Prepare Your Link in Three Steps</h2>
-
-      <h3>Find the exact post</h3>
 
       <p>
-        Play the video you have in mind before copying anything. A
-        creator may have several clips with similar covers, and a
-        search result can lead to a collection rather than the
-        individual post.
+        The advantage of this approach is not complexity. It is clarity.
+        Someone visiting for the first time should be able to understand the
+        purpose of the page almost immediately. The input field explains what
+        belongs there, and the action button provides the next step.
       </p>
 
-      <h3>Copy the video address</h3>
+      <div class="highlight">
+        A good downloader interface should make the task obvious. The
+        important part is the video address, so the page keeps that address
+        at the center of the experience.
+      </div>
+
+
+      <h2>Getting a TikTok URL Ready</h2>
 
       <p>
-        Look for a link-copying option in the post’s sharing menu.
-        When browsing on a computer, you can also copy the address
-        from the individual video page. If you have a link inside a
-        message, select the address without the surrounding words.
+        Before using the downloader, locate the TikTok post you are
+        interested in. The easiest option is normally to use the platform's
+        sharing controls and copy the link supplied for that post.
       </p>
-
-      <h3>Submit and read the result</h3>
 
       <p>
-        Paste the address above and press Download. The message
-        beneath the field explains the next step. When a service
-        returns file choices, review those choices before beginning
-        a download.
+        If you are browsing TikTok from a desktop computer, another option
+        is to copy the address shown in your browser after opening the video.
+        Either approach gives you a web address that can be placed into the
+        field above.
       </p>
-
-      <h2>Decide What You Want to Keep</h2>
 
       <p>
-        Think about how you will use the material before choosing an
-        output. A visual demonstration needs its pictures, while
-        spoken material may be useful as audio when that option
-        is available.
+        Take a moment to check the link before submitting it. A complete URL
+        is preferable to a partial piece of text. If you copied several
+        characters accidentally or pasted another address, the service may
+        not recognize what you intended to submit.
       </p>
+
+
+      <h2>Three Steps From a Video to a Link</h2>
+
+      <ol class="steps">
+
+        <li>
+          Find the TikTok post you want to work with and open it.
+        </li>
+
+        <li>
+          Use the sharing controls to copy the video's web address.
+        </li>
+
+        <li>
+          Return here, insert the address, and select the processing button.
+        </li>
+
+      </ol>
+
+      <p>
+        That is the basic workflow. The exact result after submitting the
+        address depends on the downloader technology connected to this page.
+        If an external processing endpoint is being used, that system is
+        responsible for retrieving and preparing the available result.
+      </p>
+
+
+      <h2>Why a Browser Tool Can Be Convenient</h2>
+
+      <p>
+        Not every task deserves another application on your phone or another
+        program on your computer. For an occasional video-link task, a web
+        page can be a practical alternative because it is immediately
+        accessible through software you already use.
+      </p>
+
+      <p>
+        Browser-based tools can also be useful when moving between devices.
+        You might discover a video on your phone but later want to work with
+        the link on a laptop. Because the basic operation is based on a web
+        address, the same general workflow can be used from either device.
+      </p>
+
+      <p>
+        This page has therefore been kept intentionally lightweight. There
+        are no large visual effects required to understand the service.
+        Visitors can focus on the URL field, while the explanatory material
+        below answers common questions about the process.
+      </p>
+
+
+      <h2>Using the Page From a Phone</h2>
+
+      <p>
+        Smartphones are often where people discover TikTok content, so the
+        downloader needs to remain comfortable on a narrow screen. The layout
+        automatically changes when the available width becomes smaller.
+      </p>
+
+      <p>
+        On a phone, open the TikTok application or website, locate the video,
+        and use its sharing controls to copy the address. Then return to this
+        page through your browser and paste the address into the field.
+      </p>
+
+      <p>
+        If your phone displays a confirmation or download prompt after a
+        successful result, follow the browser's normal instructions. The
+        exact appearance of those prompts differs between browsers and
+        operating systems.
+      </p>
+
+
+      <h2>Using the Page From a Computer</h2>
+
+      <p>
+        Desktop users can follow essentially the same process. Open TikTok
+        in a browser, navigate to the desired video, and copy its URL. Open
+        the downloader in another tab and paste the address.
+      </p>
+
+      <p>
+        A computer can be particularly convenient if you are organizing
+        permitted media into folders or reviewing a number of links. Your
+        browser's normal download controls can then be used to manage files
+        that are successfully provided by the connected service.
+      </p>
+
+
+      <h2>When a Link Does Not Work</h2>
+
+      <p>
+        A submitted URL does not always produce a result. That does not
+        necessarily mean that there is a problem with your browser. Online
+        video pages can change, individual posts can become unavailable, and
+        processing systems can have limitations.
+      </p>
+
+      <h3>Check the address</h3>
+
+      <p>
+        Start by confirming that the text in the input box is actually the
+        TikTok video address. If you are uncertain, return to the original
+        post and copy the link again.
+      </p>
+
+      <h3>Check whether the video is accessible</h3>
+
+      <p>
+        If the original post cannot be opened normally, a separate downloader
+        may not be able to retrieve it either. Private, deleted, restricted,
+        or otherwise unavailable posts can behave differently from publicly
+        accessible videos.
+      </p>
+
+      <h3>Try again later</h3>
+
+      <p>
+        Temporary network problems or processing-service interruptions can
+        also prevent a result. If the URL appears correct, waiting briefly
+        and submitting it again can sometimes resolve a temporary problem.
+      </p>
+
+
+      <h2>Understanding What You Are Downloading</h2>
+
+      <p>
+        Saving a file and having permission to redistribute that file are two
+        different things. A video can be publicly visible while still being
+        protected by copyright or other rights belonging to its creator.
+      </p>
+
+      <p>
+        For personal reference, the rules may differ depending on your
+        location and circumstances. If you intend to publish the video on
+        another platform, edit it into a new project, use it commercially, or
+        distribute it to other people, you should make sure your intended use
+        is permitted.
+      </p>
+
+      <p>
+        Giving credit is helpful when appropriate, but attribution by itself
+        does not necessarily provide permission to reuse someone else's
+        work. When in doubt, ask the creator or obtain the rights needed for
+        your particular use.
+      </p>
+
+
+      <h2>Good Habits for Downloaded Files</h2>
 
       <ul>
         <li>
-          <strong>Choose video for visual instructions.</strong>
-          Hand movements, on-screen text, and before-and-after
-          examples may be essential to understanding the clip.
+          Keep downloaded files organized so you know where they came from.
         </li>
         <li>
-          <strong>Consider audio for listening.</strong>
-          An audio-only file leaves out everything shown on screen,
-          including captions that are not spoken aloud.
+          Avoid uploading another creator's work as though you produced it.
         </li>
         <li>
-          <strong>Keep the source link for context.</strong>
-          A downloaded file may not include the post description
-          or the discussion beneath it.
+          Check the permissions associated with content before publishing it elsewhere.
+        </li>
+        <li>
+          Be careful when opening files obtained from unfamiliar websites.
+        </li>
+        <li>
+          Remove files you no longer need rather than filling your device with
+          unnecessary copies.
         </li>
       </ul>
 
-      <p>
-        If you are exploring audio formats, the linked page for
-        <a
-          href="https://tiktokdownloader.ph/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >https://tiktokdownloader.ph/</a>
-        is another place to check available options.
-      </p>
 
-      <h2>Understanding Quality and File Size</h2>
+      <h2>Why the URL Matters</h2>
 
       <p>
-        Choose from the quality settings actually displayed for
-        your result. A resolution label describes the dimensions
-        of the video; it does not tell you everything about how
-        sharp or clear the recording will look.
+        A TikTok URL is more than a string of characters. It points the
+        processing system toward a particular piece of content. That is why
+        copying the correct address is the most important part of the
+        workflow.
       </p>
 
       <p>
-        The source matters. Soft focus, camera movement, and details
-        lost in the original recording do not disappear simply
-        because a file has larger dimensions. Preview your saved
-        copy before relying on it for a presentation or project.
+        Sharing addresses also makes the process portable. Instead of
+        describing which video you mean, you can pass its link directly to a
+        compatible service. This is one reason URL-based web tools remain
+        useful for many types of online content.
       </p>
 
       <p>
-        File size also deserves a look when you have limited storage.
-        Video length, audio, and encoding all affect how much space
-        a file uses. Avoid keeping several versions of the same
-        clip unless you have a reason to do so.
+        When the address is correct and the video is accessible, the rest of
+        the process can be handled by the technology behind the downloader.
+        The page itself simply provides a clean starting point.
       </p>
 
-      <h2>A Practical Routine for Mobile Users</h2>
 
-      <p>
-        Keep the source post open while you switch to your browser.
-        Paste the copied address into this page, submit it, and
-        read the response. If a file is offered, let the download
-        finish before closing the tab.
-      </p>
+      <h2>Questions People Often Ask</h2>
 
-      <p>
-        Use your browser’s download history to find the completed
-        file. Saving a file and adding it to a photo or media
-        collection may be separate actions, depending on your device.
-        Check the actual location instead of assuming it will
-        appear beside your camera photos.
-      </p>
-
-      <h2>A Practical Routine for Desktop Users</h2>
-
-      <p>
-        Place the video in one browser tab and this page in another.
-        After submitting the address, choose a destination folder
-        if your browser prompts you. For an ongoing project, saving
-        related material in the same folder can reduce cleanup later.
-      </p>
-
-      <p>
-        Open the completed file once to confirm that it plays and
-        contains the clip you expected. Rename it after that check,
-        especially if the original filename does not describe
-        its contents.
-      </p>
-
-      <h2>Work Out Where a Download Stopped</h2>
-
-      <p>
-        When something goes wrong, identify which part of the
-        process failed. Repeating the same submission without
-        checking the result can leave you with duplicate attempts
-        and no clearer answer.
-      </p>
-
-      <h3>Before the link is accepted</h3>
-
-      <p>
-        Check the address itself. Remove extra text and make sure
-        it starts with a complete web address. Open it separately
-        to see whether it leads to the intended TikTok post.
-      </p>
-
-      <h3>After the link is accepted</h3>
-
-      <p>
-        Read the page message. Passing a URL check only means the
-        address matches the expected structure. It does not
-        confirm that the video has been retrieved or that a
-        downloadable version exists.
-      </p>
-
-      <h3>While the file is transferring</h3>
-
-      <p>
-        Look in your browser’s downloads panel for progress or an
-        error. Check your connection and available storage if the
-        transfer stops. Retry after addressing the issue shown.
-      </p>
-
-      <h3>After the transfer finishes</h3>
-
-      <p>
-        Locate the completed item through download history. If it
-        does not play, confirm that the transfer finished and that
-        your chosen media player supports the downloaded format.
-      </p>
-
-      <h2>Keep the Details That Make a Clip Useful</h2>
-
-      <p>
-        A video can make perfect sense today and be hard to identify
-        a month later. Add a short note explaining why you kept it:
-        the step you want to practice, the project it belongs to,
-        or the question it answers.
-      </p>
-
-      <p>
-        Record the creator’s name and original URL alongside that
-        note. If you plan to share someone else’s material, ask
-        them first and follow their conditions. For your own
-        productions, retain the original recording or export
-        whenever you still have it.
-      </p>
-
-      <h2>Questions About TikTok Downloads</h2>
-
-      <div class="faq">
-        <h3>Can I paste several video links together?</h3>
+      <div class="question">
+        <h3>What do I need before using the tool?</h3>
         <p>
-          This field accepts one address per submission. Enter an
-          individual video link so the result corresponds to a
-          specific post.
+          You need the URL of the TikTok video you want to process. The
+          address can usually be obtained through TikTok's sharing feature.
         </p>
       </div>
 
-      <div class="faq">
-        <h3>Is a creator’s username enough?</h3>
+      <div class="question">
+        <h3>Can I use it from a smartphone?</h3>
         <p>
-          No. A username identifies an account, while this page
-          expects a web address. Open the video you want and
-          copy its link.
+          Yes. The page is responsive and can be opened in a modern mobile
+          browser. The same copy-and-paste workflow applies on a phone.
         </p>
       </div>
 
-      <div class="faq">
-        <h3>Does an accepted link mean the video is ready?</h3>
+      <div class="question">
+        <h3>Do I have to install software?</h3>
         <p>
-          No. Link validation and video retrieval are different
-          stages. Follow the message shown after submission to
-          understand whether a file is available.
+          No additional application is required to open this webpage. The
+          processing result, however, depends on the downloader service
+          connected to the page.
         </p>
       </div>
 
-      <div class="faq">
-        <h3>Can I select an audio file instead of a video?</h3>
+      <div class="question">
+        <h3>Why might a video be unavailable?</h3>
         <p>
-          Only when the download service offers an audio output
-          for that result. Check the listed choices rather than
-          assuming every link supports both.
+          A post can be deleted, private, restricted, region-dependent, or
+          otherwise inaccessible. A processing service may also have its own
+          technical limitations.
         </p>
       </div>
 
-      <div class="faq">
-        <h3>Will the file include the comments beneath the post?</h3>
+      <div class="question">
+        <h3>Can downloaded videos be reposted?</h3>
         <p>
-          Do not treat a media download as a complete copy of the
-          post page. Keep the original URL if the caption or
-          discussion matters to you.
+          Do not assume that downloading gives you redistribution rights.
+          Check the creator's permissions and the laws and platform rules
+          relevant to your intended use.
         </p>
       </div>
 
-      <div class="faq">
-        <h3>Why do I have two copies of the same clip?</h3>
+      <div class="question">
+        <h3>What happens if I paste the wrong website address?</h3>
         <p>
-          You may have started the download more than once.
-          Compare the files and keep the complete version you
-          need before removing duplicates.
+          The page checks whether the submitted address appears to be a
+          TikTok URL. An address from another website will not be treated as
+          a valid TikTok link by this interface.
         </p>
       </div>
 
-      <div class="faq">
-        <h3>Can I use the page without adding a browser extension?</h3>
-        <p>
-          Yes. Entering and checking a link on this page does
-          not require a browser extension.
-        </p>
-      </div>
 
-      <div class="faq">
-        <h3>What should I do if the source post no longer opens?</h3>
-        <p>
-          Confirm that you have the correct address. If the
-          original video is unavailable, this page cannot
-          promise a downloadable copy.
-        </p>
-      </div>
-
-      <h2>Bring Your Next Video Link Here</h2>
+      <h2>A Focused Tool for a Focused Task</h2>
 
       <p>
-        Have a clip of your own or one you have permission to save?
-        Copy the post address and enter it above. Start with the
-        correct link, review the response, and keep the source
-        details with any file you download.
+        The idea behind this page is deliberately uncomplicated. You already
+        know which video you want to work with; the useful part is giving the
+        downloader the correct address without making the journey difficult.
       </p>
+
+      <p>
+        Whether you are reviewing educational material, keeping a permitted
+        personal reference, organizing your own published videos, or simply
+        learning how URL-based media tools work, the first step remains the
+        same: identify the correct TikTok address.
+      </p>
+
+      <p>
+        From there, the connected processing system determines what can be
+        retrieved. Keeping that distinction clear helps set realistic
+        expectations and avoids presenting a simple webpage as though it can
+        bypass every technical or access restriction.
+      </p>
+
+      <p>
+        If you choose to save a video, use the resulting material thoughtfully.
+        Respect creators, observe applicable copyright requirements, and
+        follow the rules of the services where you intend to use the content.
+      </p>
+
+      <p>
+        For the everyday visitor, the process remains simple: locate the
+        video, copy its address, return to this page, and submit the link.
+        You can also compare options through
+        <a href="https://tiktokdownloader.ph/" target="_blank" rel="noopener noreferrer">tiktok downloader free</a>
+        when it suits your needs.
+      </p>
+
     </article>
-  </main>
 
-  <footer>
-    <div class="container">
-      <p>
-        &copy; <span id="year"></span> TikTok Downloader.
-        All rights reserved.
-      </p>
 
-      <p>
-        Independently operated. Not affiliated with TikTok or ByteDance.
-      </p>
-    </div>
-  </footer>
+    <footer>
+      <div>
+        © <span id="year"></span> TikTok Video Downloader
+      </div>
+
+      <div>
+        This is an independent website and is not affiliated with TikTok or ByteDance.
+      </div>
+    </footer>
+
+  </div>
+
 
   <script>
     document.getElementById("year").textContent =
       new Date().getFullYear();
 
-    const form = document.getElementById("downloadForm");
-    const input = document.getElementById("tiktokUrl");
-    const message = document.getElementById("message");
-
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-      processVideo();
-    });
-
-    function showMessage(text) {
-      message.style.display = "block";
-      message.textContent = text;
-    }
-
-    function processVideo() {
+    function startDownload() {
+      const input = document.getElementById("videoUrl");
+      const status = document.getElementById("status");
       const value = input.value.trim();
 
+      status.style.display = "block";
+
       if (!value) {
-        showMessage("Add a TikTok video address before continuing.");
-        input.focus();
+        status.textContent = "Paste a TikTok video address into the box first.";
         return;
       }
 
-      try {
-        const url = new URL(value);
-        const hostname = url.hostname.toLowerCase();
+      const isTikTok =
+        /^(https?:\/\/)?([a-z0-9-]+\.)?tiktok\.com(\/|$)/i.test(value);
 
-        const validProtocol =
-          url.protocol === "https:" || url.protocol === "http:";
-
-        const validHost =
-          hostname === "tiktok.com" ||
-          hostname.endsWith(".tiktok.com");
-
-        if (
-          !validProtocol ||
-          !validHost ||
-          url.username ||
-          url.password ||
-          url.pathname === "/"
-        ) {
-          throw new Error("Invalid address");
-        }
-      } catch {
-        showMessage(
-          "Check the address and paste a full TikTok video URL starting with https://."
-        );
+      if (!isTikTok) {
+        status.textContent =
+          "That does not appear to be a TikTok address. Please check the URL and try again.";
         return;
       }
 
       /*
-        Connect a working downloader API here.
-        This template checks URL structure only.
+        CONNECT YOUR DOWNLOADER API HERE.
+
+        Example structure:
+
+        fetch("/api/download", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            url: value
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Display the download result here.
+        })
+        .catch(error => {
+          status.textContent =
+            "The video could not be processed right now.";
+        });
       */
 
-      showMessage(
-        "The address passed the link check. Video downloads are not enabled on this page yet."
-      );
+      status.textContent =
+        "The TikTok address is valid and ready for your downloader API.";
     }
+
+    document.getElementById("videoUrl").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        startDownload();
+      }
+    });
   </script>
+
 </body>
 </html>
